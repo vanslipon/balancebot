@@ -5,7 +5,29 @@ import math
 import time
 from MPU6050 import MPU6050
 from PID import PID
-import motor as MOTOR
+
+import powertrain
+
+# powertrain
+POWERTRAIN_IN1_PIN = 19
+POWERTRAIN_IN2_PIN = 13
+POWERTRAIN_IN3_PIN = 6
+POWERTRAIN_IN4_PIN = 5
+POWERTRAIN_ENA_PIN = 26
+POWERTRAIN_ENB_PIN = 11
+MOTORSPEED_LEFT = 75
+MOTORSPEED_RIGHT = 75
+
+
+MOTOR = powertrain.powertrain(
+    POWERTRAIN_IN1_PIN,
+    POWERTRAIN_IN2_PIN,
+    POWERTRAIN_IN3_PIN,
+    POWERTRAIN_IN4_PIN,
+    POWERTRAIN_ENA_PIN,
+    POWERTRAIN_ENB_PIN,
+    MOTORSPEED_LEFT,
+    MOTORSPEED_RIGHT)
 
 gyro_scale = 131.0
 accel_scale = 16384.0
@@ -108,7 +130,7 @@ for i in range(0, int(300.0 / time_diff)):
     elif(pid < 0):
         MOTOR.backward( abs(speed) )
     else:
-	MOTOR.stop()
+	    MOTOR.stop()
 
-    print "{0:.2f} {1:.2f} {2:.2f} {3:.2f} | {4:.2f} {5:.2f} | {6:.2f} | {7:.2f} ".format( gyroAngleX, gyroAngleY , accAngX, CFangleX, accAngX1, CFangleX1, pid, speed)
+    print ("{0:.2f} {1:.2f} {2:.2f} {3:.2f} | {4:.2f} {5:.2f} | {6:.2f} | {7:.2f} ".format( gyroAngleX, gyroAngleY , accAngX, CFangleX, accAngX1, CFangleX1, pid, speed))
     #print "{0:.2f} {1:.2f}".format( sensor.read_pitch(), sensor.read_roll())
